@@ -72,7 +72,6 @@ const  LoginPage = () => {
 
   const  { login, isLoading, error, errorMsg} = UseLogin()
 
-
   const handleSubmit = values => {
           const formatObjectForPost = {
             email:values.email,
