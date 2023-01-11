@@ -6,9 +6,8 @@ import {Link} from '@mui/material';
 import { ReactComponent as Netflix } from './netflix.svg';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import UseLogout from '../hooks/useLogout';
 
-
-const Navbar = () => {
 
 const StyledNavbarBox = styled(Box)`
   width:100vw;
@@ -33,16 +32,23 @@ const StyledSignButton = styled(Button)`
   color:#fff;
   padding: 7px 15px;
   background-color: #E50914;
-  &:hover {color: #C1C1C1; transition: 0.7s ease-in-out}
+  &:hover {color: #C1C1C1; transition: 0.8s ease-in-out}
 `
+const Navbar = () => {
 
-const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
+  const { logout } = UseLogout()
 
-  return (
+  const handleLogout = (e) => {
+    e.preventDefault()
+    logout()
+  }
+
+return (
     <StyledNavbarBox>
       <Link href="main-page"><Netflix/></Link>
       <StyledSignButtonBox>
-        {user ? <Box>Log out</Box> : 
+        {user ? <StyledSignButton onClick={handleLogout}>Log out</StyledSignButton> : 
         <Link href="login" sx={{textDecoration:'none'}}>
         <StyledSignButton>Sign in</StyledSignButton> 
         </Link>  }
