@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, TextField, Typography, Button} from '@mui/material'
+import { Box, TextField, Typography, Button, Checkbox, Link} from '@mui/material'
 import styled from '@emotion/styled';
 import UseLogin from '../../components/hooks/useLogin';
 import * as Yup from 'yup';
@@ -27,7 +27,7 @@ const StyledErrorBox = styled(Box)`
 
 const StyledInputBox =styled(Box)`
   display:flex;
-  width:65%;
+  width:75%;
   flex-direction:column;
   justify-content:center;
   align-items:center;
@@ -43,8 +43,7 @@ const StyledLoginButton = styled(Button)`
   color: #fff;
   background-color: red;
   padding: 13px 20px;
-  width:65%;
-  margin-top: 30px;
+  width:75%;
   font-size: 1rem;
   &:hover {
       background-color: red;
@@ -57,8 +56,25 @@ const StyledInputErrors = styled(Box)`
   justify-content: flex-start;
   width:100%;
   margin-top:10px;
-  
   `
+
+const StyledCredentialsBox = styled(Box)`
+  width: 75%;
+  margin-top: 2rem;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #8C8C8C;
+`
+
+const StyledRegisterLinkBox = styled(Box)`
+  width: 75%;
+  margin-top: 2rem;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #8C8C8C;
+`
 
 const validationSchema = Yup.object({
         email: Yup.string()
@@ -97,7 +113,7 @@ return (
       <Box sx={{marginRight:'20px'}}>
       </Box>
       <LoginFormBox>
-        <Box sx={{display:'flex', justifyContent:'flex-start', width:'65%', marginTop:'40px', }}>
+        <Box sx={{display:'flex', justifyContent:'flex-start', width:'75%', marginTop:'40px', }}>
         <Typography variant='h4' sx={{fontFamily: 'Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans', fontWeight:'700'}}>Sign in</Typography>
         </Box>
          <StyledInputBox>
@@ -136,12 +152,23 @@ return (
               onChange={formik.handleChange}
               value={formik.values.password}
             />
-              <StyledInputErrors>
+            <StyledInputErrors>
               {formik.errors?.password}
             </StyledInputErrors>
             <StyledErrorBox>{error ? errorMsg : null}</StyledErrorBox>
         </StyledInputBox>
         <StyledLoginButton type='submit'>Sign in</StyledLoginButton>
+         <StyledCredentialsBox sx={{color: '#fff'}}>
+              <Box>
+                <Checkbox sx={{color: '#fff', padding: 0, '&.Mui-checked':{color: '#fff'}}}/>
+                  Remember me
+              </Box>
+            <Link href='#' sx={{color: '#8C8C8C', textDecoration: 'none'}}>Need help?</Link>
+          </StyledCredentialsBox>
+          <StyledRegisterLinkBox>
+                <Typography sx={{mb: 2}} >New to Netflix? <Link href='#' sx={{color: '#fff'}}> Sign up now. </Link></Typography>
+                <Typography>This page is protected by Google reCAPTCHA to ensure you're not a bot. <Link href='#'>Learn more.</Link></Typography>
+          </StyledRegisterLinkBox>
       </LoginFormBox>
     </Box>
   );
