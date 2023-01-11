@@ -11,17 +11,15 @@ const UseLogin = () => {
   const { dispatch } = useAuthContext()
   const { user } = useContext(AuthContext)
 
-  // const checkAuthorization = (loginData, mockedUsersData) => {
+  const checkAuthorization = (loginData, mockedUsersData) => {
 
-  //   const checkValues = mockedUsersData.includes(loginData)
-  //   console.log('login Values',loginData)
-  //   console.log('data', mockedUsersData)
+    const checkValues = mockedUsersData.find(person => person.email === loginData.email && person.password === loginData.password)
+    if (checkValues){
+      dispatch({ type: 'LOGIN', payload: loginData })
+    }
+    console.log('gaidys', checkValues)
 
-  //   if (checkValues){
-  //   }
-  //   console.log('gaidys', checkValues)
-
-  // }
+  }
 
   const login = async (values) => {
     setIsLoading(true)
@@ -29,7 +27,7 @@ const UseLogin = () => {
     userApi.userLogin(values)
 
       .then(({ data }) => {
-        dispatch({ type: 'LOGIN', payload: values })
+        checkAuthorization(values, data)
         setIsLoading(false)
       }
       )
