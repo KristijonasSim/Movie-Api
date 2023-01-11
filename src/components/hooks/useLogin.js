@@ -41,8 +41,6 @@ const UseLogin = () => {
       )
   }
 
-  console.log(user)
-
   return { login, isLoading, error, errorMsg }
 }
 
