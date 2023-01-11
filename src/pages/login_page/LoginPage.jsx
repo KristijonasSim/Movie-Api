@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import UseLogin from '../../components/hooks/useLogin';
 import * as Yup from 'yup';
 import {  useFormik } from 'formik';
+import netflixImg from '../../components/assets/netflix.jpg'
 
 const LoginFormBox = styled(Box)`
   width: 25%;
@@ -17,6 +18,7 @@ const LoginFormBox = styled(Box)`
   flex-direction:column;
   color:#fff;
   background-color: rgba(0,0,0,0.8);
+  opacity:1
 `
 
 const StyledErrorBox = styled(Box)`
@@ -76,6 +78,13 @@ const StyledRegisterLinkBox = styled(Box)`
   color: #8C8C8C;
 `
 
+const StyledHeroSection = styled(Box)`
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.9)) , url(${netflixImg});
+    background-size: cover;
+    height: 120vh
+`
+
+
 const validationSchema = Yup.object({
         email: Yup.string()
           .required('Please enter a valid email'),
@@ -109,6 +118,8 @@ const  LoginPage = () => {
     })
 
 return (
+  <StyledHeroSection>
+  <Box>
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }} component='form' onSubmit={formik.handleSubmit}>
       <Box sx={{marginRight:'20px'}}>
       </Box>
@@ -170,7 +181,9 @@ return (
                 <Typography>This page is protected by Google reCAPTCHA to ensure you're not a bot. <Link href='#'>Learn more.</Link></Typography>
           </StyledRegisterLinkBox>
       </LoginFormBox>
+       </Box>
     </Box>
+  </StyledHeroSection>
   );
 }
 
