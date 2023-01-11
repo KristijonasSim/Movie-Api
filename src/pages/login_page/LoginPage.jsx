@@ -38,7 +38,6 @@ const StyledInputBox =styled(Box)`
 const StyledTextField = styled(TextField)`
   background-color: #333333;
   border-radius: 4px;
-  color:blue;
 `
 const StyledLoginButton = styled(Button)`
   color: #fff;
@@ -73,7 +72,6 @@ const  LoginPage = () => {
 
   const  { login, isLoading, error, errorMsg} = UseLogin()
 
-    console.log(error)
 
   const handleSubmit = values => {
           const formatObjectForPost = {
@@ -81,8 +79,8 @@ const  LoginPage = () => {
             password:values.password
           }
           login(formatObjectForPost)
-          console.log(formatObjectForPost)
-     }
+  }
+
    const formik = useFormik({
      initialValues: {
        email: '',
@@ -94,6 +92,7 @@ const  LoginPage = () => {
      validationSchema,
         onSubmit: handleSubmit
     })
+
 return (
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }} component='form' onSubmit={formik.handleSubmit}>
       <Box sx={{marginRight:'20px'}}>

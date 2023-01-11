@@ -4,6 +4,9 @@ import { Box } from '@mui/system';
 import { Button } from '@mui/material';
 import {Link} from '@mui/material';
 import { ReactComponent as Netflix } from './netflix.svg';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+
 
 const Navbar = () => {
 
@@ -32,13 +35,17 @@ const StyledSignButton = styled(Button)`
   background-color: #E50914;
   &:hover {color: #C1C1C1; transition: 0.7s ease-in-out}
 `
+
+const { user } = useContext(AuthContext)
+
   return (
     <StyledNavbarBox>
       <Link href="main-page"><Netflix/></Link>
       <StyledSignButtonBox>
+        {user ? <Box>Log out</Box> : 
         <Link href="login" sx={{textDecoration:'none'}}>
-        <StyledSignButton>Sign in</StyledSignButton>
-        </Link>  
+        <StyledSignButton>Sign in</StyledSignButton> 
+        </Link>  }
       </StyledSignButtonBox>
     </StyledNavbarBox>
   )
