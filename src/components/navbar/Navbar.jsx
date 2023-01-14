@@ -10,13 +10,14 @@ import UseLogout from '../hooks/useLogout';
 
 
 const StyledNavbarBox = styled(Box)`
-  width:100vw;
+  width:100%;
   height:90px;
   background-color: rgba(0,0,0,0.4);
   color: #fff;
   display:flex;
   align-items:center;
   position: fixed;
+  z-index: 2;
 `
 
 const StyledSignButtonBox = styled(Box)`
@@ -46,7 +47,7 @@ const Navbar = () => {
 
 return (
     <StyledNavbarBox>
-      <Link href="main-page"><Netflix/></Link>
+      <Link href="main-page"><Netflix /></Link>
       <StyledSignButtonBox>
         {user ? <StyledSignButton onClick={handleLogout}>Log out</StyledSignButton> : 
         <Link href="login" sx={{textDecoration:'none'}}>

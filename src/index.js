@@ -9,8 +9,10 @@ import {
 import MainPage from './pages/main_page/MainPage';
 import LoginPage from './pages/login_page/LoginPage';
 import Navbar from './components/navbar/Navbar';
+import Footer from './components/footer/Footer';
 import './index.css'
 import { AuthContextProvider } from './components/context/AuthContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthContextProvider>
@@ -21,6 +23,7 @@ root.render(
         <Route path="main-page" element={<MainPage/>}/>
         <Route path="login" element={<LoginPage/>}/>
       </Routes>
+      <Footer/>
     </BrowserRouter>
   </AuthContextProvider>
 );
