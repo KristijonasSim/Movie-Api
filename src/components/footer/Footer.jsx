@@ -8,7 +8,7 @@ height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:70px 45px;
+padding:70px 0px;
 `
 
 const Footer = () => {

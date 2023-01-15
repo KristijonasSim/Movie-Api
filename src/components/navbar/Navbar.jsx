@@ -29,10 +29,12 @@ const StyledSignButtonBox = styled(Box)`
 `
 
 const StyledSignButton = styled(Button)`
-  font-size: 1.10rem;
+  font-size: 1rem;
+  font-weight: 400;
   color:#fff;
-  padding: 7px 15px;
-  background-color: #E50914;
+  padding: 7px 17px;
+  background-color: #e50914;
+  border-radius: 3px;
   &:hover {color: #C1C1C1; transition: 0.8s ease-in-out}
 `
 const Navbar = () => {
