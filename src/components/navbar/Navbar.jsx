@@ -10,32 +10,33 @@ import UseLogout from '../hooks/useLogout';
 
 
 const StyledNavbarBox = styled(Box)`
-  width:100%;
-  height:90px;
-  background-color: rgba(0,0,0,0.4);
-  color: #fff;
-  display:flex;
-  align-items:center;
-  position: fixed;
-  z-index: 2;
+ max-width: 2050px; 
+ position: relative;
+ z-index: 10;
+ margin: 0 4rem;
+ height: auto;
 `
 
-const StyledSignButtonBox = styled(Box)`
-  width:100%;
-  display:flex;
-  justify-content: flex-end;
-  align-items:center;
-  margin-right: 40px;
+const StyledNavbarInnerContainer = styled(Box)`
+  align-items: center;
+  display: flex; 
+  height: auto; 
+  justify-content: space-between; 
+  position: absolute;
+  width: 100%;
+  height: 7rem;
 `
 
 const StyledSignButton = styled(Button)`
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.2rem;
+  font-weight: 500;
   color:#fff;
-  padding: 7px 17px;
+  padding: 2px 17px;
   background-color: #e50914;
   border-radius: 3px;
-  &:hover {color: #C1C1C1; transition: 0.8s ease-in-out}
+  text-transform: capitalize;
+  letter-spacing: 0!important;
+  &:hover {color: #C1C1C1; transition: 0.8s ease-in-out};
 `
 const Navbar = () => {
 
@@ -48,16 +49,21 @@ const Navbar = () => {
   }
 
 return (
-    <StyledNavbarBox>
-      <Link href="main-page"><Netflix /></Link>
-      <StyledSignButtonBox>
-        {user ? <StyledSignButton onClick={handleLogout}>Log out</StyledSignButton> : 
-        <Link href="login" sx={{textDecoration:'none'}}>
-        <StyledSignButton>Sign in</StyledSignButton> 
+      <StyledNavbarBox>
+        <StyledNavbarInnerContainer>
+          <Link href="main-page">
+                <Netflix/>
+          </Link>
+          <Box>
+            {user ? <StyledSignButton onClick={handleLogout}>Log out</StyledSignButton> : 
+            <Link href="login" sx={{textDecoration:'none'}}>
+            <StyledSignButton>Sign in</StyledSignButton> 
         </Link>  }
-      </StyledSignButtonBox>
-    </StyledNavbarBox>
+          </Box>
+        </StyledNavbarInnerContainer>
+      </StyledNavbarBox>
   )
 }
 
 export default Navbar
+

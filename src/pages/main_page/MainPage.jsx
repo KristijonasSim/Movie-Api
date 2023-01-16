@@ -18,12 +18,12 @@ const StyledInputBox = styled(Box)`
     justify-content:center;
     align-items:center;
     color: #fff;
-
-`
+    `
 const StyledHeroSection = styled(Box)`
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.9)) , url(${netflixImg});
+    background-image: linear-gradient(0deg,transparent 50%,rgba(0,0,0,.7)),radial-gradient(50% 100%,transparent 0,rgba(0,0,0,.7) 100%) , url(${netflixImg});
     background-size: cover;
     height: 80vh;
+    width:100%;
     border-bottom: 8px solid #222;
 `
 const StyledStoryCard = styled(Box)`
@@ -40,7 +40,6 @@ const StyledStoryCardContent = styled(Box)`
     justify-content: space-between;
     margin: 0 auto;
     max-width: 1400px;
-    
 `
 
 const StyledStoryCardText = styled(Box)`
@@ -68,7 +67,7 @@ const MainPage = () => {
           <StyledInputBox>
             <Typography variant='h2' sx={{margin: '1rem'}}>Unlimited movies, TV shows, and more.</Typography>
             <Typography variant='h4' sx={{margin: '1rem'}}>Watch anywhere. Cancel anytime.</Typography>
-            <Typography variant='h6' sx={{margin: '1rem'}}>Ready to watch? Enter your email to create or restart your membership.</Typography>
+            <Typography variant='h6' sx={{margin: '1rem', marginBottom:'2rem'}}>Ready to watch? Enter your email to create or restart your membership.</Typography>
             <EmailInputCard/>
         </StyledInputBox>
       </StyledHeroSection>
@@ -80,11 +79,11 @@ const MainPage = () => {
             <Typography variant='h4'>Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.</Typography>
           </StyledStoryCardText>
           <StyledStoryCardAnimation>
-            <Box sx={{zIndex:'1'}}>
+            <Box sx={{zIndex:'1', }}>
               <img src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/tv.png"/>
             </Box>
             <Box sx={{position:'absolute', top:'20%',  left:'85px'}}>
-              <video autoPlay="autoplay" playsInline muted loop>
+              <video  autoPlay="autoplay" playsInline muted loop>
                 <source src='https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v' type="video/mp4" />
               </video>
               </Box>
@@ -115,10 +114,10 @@ const MainPage = () => {
           </StyledStoryCardText>
           <StyledStoryCardAnimation>
             <Box sx={{zIndex:'1'}}>
-              <img src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/device-pile.png"/>
+              <img width='600px'  src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/device-pile.png"/>
             </Box>
             <Box sx={{position:'absolute', top:'11%',  left:'110px'}}>
-              <video autoPlay="autoplay" playsInline muted loop height='235'>
+              <video width='370px' autoPlay="autoplay" playsInline muted loop height='235'>
                 <source  src='https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-devices.m4v' type="video/mp4" />
               </video>
               </Box>
@@ -130,7 +129,7 @@ const MainPage = () => {
       <StyledStoryCardContent>
           <StyledStoryCardText>
             <Box>
-              <img height='400px' src="https://occ-0-7397-1500.1.nflxso.net/dnm/api/v6/19OhWN2dO19C9txTON9tvTFtefw/AAAABfpnX3dbgjZ-Je8Ax3xn0kXehZm_5L6-xe6YSTq_ucht9TI5jwDMqusWZKNYT8DfGudD0_wWVVTFLiN2_kaQJumz2iivUWbIbAtF.png?r=11f"/>
+              <img sx={{objetFit:'cover'}} src="https://occ-0-7397-1500.1.nflxso.net/dnm/api/v6/19OhWN2dO19C9txTON9tvTFtefw/AAAABfpnX3dbgjZ-Je8Ax3xn0kXehZm_5L6-xe6YSTq_ucht9TI5jwDMqusWZKNYT8DfGudD0_wWVVTFLiN2_kaQJumz2iivUWbIbAtF.png?r=11f"/>
             </Box>
           </StyledStoryCardText>
           <StyledStoryCardAnimation >

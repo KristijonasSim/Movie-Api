@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@mui/system'
 import styled from '@emotion/styled'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, Link } from '@mui/material'
 
 const EmailInputCard = () => {
 
@@ -11,7 +11,7 @@ const StyledTextField = styled(TextField)`
     border-radius: 4px;
     width: 70%;
     color:blue;
-    height: 68px;
+    height: 60px;
     border-radius:0;
 `
 const StyledButton = styled(Button)`
@@ -28,11 +28,11 @@ const StyledButton = styled(Button)`
 `
 
   return (
-          <Box component='form' sx={{width:'100%', display:'flex',padding: '10px 10px 0', justifyContent:'center',}}>
+          <Box component='form' sx={{width:'100%', display:'flex',justifyContent:'center',}}>
               <StyledTextField
-              sx={{ input: { color: 'black', marginLeft:'20px', marginBottom:'10px' }}}
+              sx={{ input: { color: 'black', marginLeft:'20px', marginBottom:'10px'}}}
               InputLabelProps={{
-                    style: { color: '#8C8C8C', marginLeft: '24px' },
+                    style: { color: '#8C8C8C', marginLeft: '24px', },
               }}
               id="email"
               name="email"
@@ -41,7 +41,7 @@ const StyledButton = styled(Button)`
               variant="standard"
               InputProps={{ disableUnderline: true }}
               />
-              <StyledButton>Get Started</StyledButton>
+                <StyledButton href='register'>Get Started</StyledButton>
             </Box>
 
   )

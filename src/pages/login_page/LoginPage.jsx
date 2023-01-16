@@ -18,7 +18,6 @@ const LoginFormBox = styled(Box)`
   flex-direction:column;
   color:#fff;
   background-color: rgba(0,0,0,0.8);
-  opacity:1
 `
 
 const StyledErrorBox = styled(Box)`
@@ -80,7 +79,7 @@ const StyledRegisterLinkBox = styled(Box)`
 `
 
 const StyledHeroSection = styled(Box)`
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.9)) , url(${netflixImg});
+    background-image: linear-gradient(0deg,transparent 50%,rgba(0,0,0,.7)),radial-gradient(50% 100%,transparent 0,rgba(0,0,0,.7) 100%) , url(${netflixImg});
     background-size: cover;
     height: 120vh
 `
@@ -126,7 +125,7 @@ return (
         </Box>
          <StyledInputBox>
             <StyledTextField 
-              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px' } }} 
+              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
               fullWidth
               InputLabelProps={{
                 style: { color: '#8C8C8C', marginLeft: '24px' },
