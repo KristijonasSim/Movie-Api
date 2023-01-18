@@ -1,23 +1,26 @@
-import React from 'react'
+import React, {useState, useCallback} from 'react'
 import { Box } from '@mui/system'
+import { useNavigate } from 'react-router-dom';
+
 import styled from '@emotion/styled'
-import { Typography, TextField, Button,  } from '@mui/material'
+import { Typography, Button,  } from '@mui/material'
 import netflixImg from '../../../src/components/assets/netflix.jpg'
 import AcordionCard from '../../components/cards/acordion_card/acordion_card'
 import EmailInputCard from '../../components/cards/email_input_card/EmailInputCard'
 
-
 const StyledInputBox = styled(Box)`
-    margin: 0 auto;
-    height:100%;
-    max-width:750px;
-    text-align:center;
-    font-weight:900;
     display:flex;
     flex-direction: column;
     justify-content:center;
     align-items:center;
+    height:100%;
+    margin: 0 auto;
+    max-width:750px;
+    text-align:center;
+    font-weight:900;
     color: #fff;
+    gap: 2rem;
+
     `
 const StyledHeroSection = styled(Box)`
     background-image: linear-gradient(0deg,transparent 50%,rgba(0,0,0,.7)),radial-gradient(50% 100%,transparent 0,rgba(0,0,0,.7) 100%) , url(${netflixImg});
@@ -57,18 +60,52 @@ const StyledStoryCardAnimation = styled(Box)`
     display: flex;
     flex-direction:column;
 `
+const StyledButton = styled(Button)`
+  border-radius: 0;
+  border-left: 1px solid #333;
+  border-top-left-radius: 0;
+  margin: 0 !important;
+  font-size: 1.5rem;
+  min-height: 40px;
+  width: 30%;
+  background-color: #e10813;
+  color: #fff;
+  text-transform: capitalize;
+  &:hover {
+    background-color: red;
+  }
+`;
+
 
 const MainPage = () => {
 
+const [emailValue,setEmailValue] = useState()
 
+
+const handleInputChange = (e) => {
+  setEmailValue(e.target.value)
+}
+
+  const navigate = useNavigate();
+
+
+
+console.log('reiksme:',emailValue)
   return (
     <Box>
       <StyledHeroSection>
           <StyledInputBox>
-            <Typography variant='h2' sx={{margin: '1rem'}}>Unlimited movies, TV shows, and more.</Typography>
-            <Typography variant='h4' sx={{margin: '1rem'}}>Watch anywhere. Cancel anytime.</Typography>
-            <Typography variant='h6' sx={{margin: '1rem', marginBottom:'2rem'}}>Ready to watch? Enter your email to create or restart your membership.</Typography>
-            <EmailInputCard/>
+            <Typography variant='h2' >Unlimited movies, TV shows, and more.</Typography>
+            <Typography variant='h4'>Watch anywhere. Cancel anytime.</Typography>
+            <Typography variant='h6' >Ready to watch? Enter your email to create or restart your membership.</Typography>
+            <Box  component="form"
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+  
+            <EmailInputCard value={emailValue} handleChange={handleInputChange}/>
+            <StyledButton href='register '>Get Started</StyledButton>
+
+            </Box>
+
         </StyledInputBox>
       </StyledHeroSection>
 
@@ -148,7 +185,7 @@ const MainPage = () => {
             Ready to watch? Enter your email to create or restart your membership.
 
           </Typography>
-          <EmailInputCard/>
+          <EmailInputCard value={emailValue} handleInputChange={handleInputChange}/>
         </StyledInputBox>
   </StyledStoryCard>
 
