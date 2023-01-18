@@ -7,9 +7,10 @@ import {  useFormik } from 'formik';
 import netflixImg from '../../components/assets/netflix.jpg'
 
 const LoginFormBox = styled(Box)`
-  width: 25%;
-  height: 65%;
+  width: 24%;
+  height: 60%;
   min-width: 400px;
+  padding-bottom: 8rem;
   border: 2px solid black;
   border-radius: 10px ;
   display:flex;
@@ -49,7 +50,7 @@ const StyledLoginButton = styled(Button)`
   font-size: 1rem;
   &:hover {
       background-color: red;
-      }
+  }
   `
 
 const StyledInputErrors = styled(Box)`
@@ -176,7 +177,7 @@ return (
           </StyledCredentialsBox>
 
           <StyledRegisterLinkBox>
-                <Typography sx={{mb: 2}} >New to Netflix? <Link href='#' sx={{color: '#fff'}}> Sign up now. </Link></Typography>
+                <Typography sx={{mb: 2}} >New to Netflix? <Link href='register' sx={{color: '#fff'}}> Sign up now. </Link></Typography>
                 <Typography>This page is protected by Google reCAPTCHA to ensure you're not a bot. <Link href='#'>Learn more.</Link></Typography>
           </StyledRegisterLinkBox>
 
