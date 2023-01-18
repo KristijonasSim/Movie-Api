@@ -18,7 +18,6 @@ const LoginFormBox = styled(Box)`
   flex-direction:column;
   color:#fff;
   background-color: rgba(0,0,0,0.8);
-  opacity:1
 `
 
 const StyledErrorBox = styled(Box)`
@@ -35,12 +34,13 @@ const StyledInputBox =styled(Box)`
   align-items:center;
   margin-top:40px;
   margin-bottom: 20px;
-`;
+`
 
 const StyledTextField = styled(TextField)`
   background-color: #333333;
   border-radius: 4px;
 `
+
 const StyledLoginButton = styled(Button)`
   color: #fff;
   background-color: red;
@@ -79,11 +79,10 @@ const StyledRegisterLinkBox = styled(Box)`
 `
 
 const StyledHeroSection = styled(Box)`
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.9)) , url(${netflixImg});
+    background-image: linear-gradient(0deg,transparent 50%,rgba(0,0,0,.7)),radial-gradient(50% 100%,transparent 0,rgba(0,0,0,.7) 100%) , url(${netflixImg});
     background-size: cover;
     height: 120vh
 `
-
 
 const validationSchema = Yup.object({
         email: Yup.string()
@@ -119,17 +118,14 @@ const  LoginPage = () => {
 
 return (
   <StyledHeroSection>
-  <Box>
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }} component='form' onSubmit={formik.handleSubmit}>
-      <Box sx={{marginRight:'20px'}}>
-      </Box>
       <LoginFormBox>
         <Box sx={{display:'flex', justifyContent:'flex-start', width:'75%', marginTop:'40px', }}>
-        <Typography variant='h4' sx={{fontFamily: 'Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans', fontWeight:'700'}}>Sign in</Typography>
+           <Typography variant='h4'>Sign in</Typography>
         </Box>
          <StyledInputBox>
             <StyledTextField 
-              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px' } }} 
+              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
               fullWidth
               InputLabelProps={{
                 style: { color: '#8C8C8C', marginLeft: '24px' },
@@ -164,11 +160,13 @@ return (
               value={formik.values.password}
             />
             <StyledInputErrors>
-              {formik.errors?.password}
+                {formik.errors?.password}
             </StyledInputErrors>
             <StyledErrorBox>{error ? errorMsg : null}</StyledErrorBox>
         </StyledInputBox>
+
         <StyledLoginButton type='submit'>Sign in</StyledLoginButton>
+
          <StyledCredentialsBox sx={{color: '#fff'}}>
               <Box>
                 <Checkbox sx={{color: '#fff', padding: 0, '&.Mui-checked':{color: '#fff'}}}/>
@@ -176,13 +174,14 @@ return (
               </Box>
             <Link href='#' sx={{color: '#8C8C8C', textDecoration: 'none'}}>Need help?</Link>
           </StyledCredentialsBox>
+
           <StyledRegisterLinkBox>
                 <Typography sx={{mb: 2}} >New to Netflix? <Link href='#' sx={{color: '#fff'}}> Sign up now. </Link></Typography>
                 <Typography>This page is protected by Google reCAPTCHA to ensure you're not a bot. <Link href='#'>Learn more.</Link></Typography>
           </StyledRegisterLinkBox>
+
       </LoginFormBox>
        </Box>
-    </Box>
   </StyledHeroSection>
   );
 }

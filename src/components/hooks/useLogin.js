@@ -28,10 +28,9 @@ const UseLogin = () => {
     setIsLoading(true)
     setError(null)
     userApi.userLogin(values)
-
       .then(({ data }) => {
-        checkAuthorization(values, data)
-        setIsLoading(false)
+      checkAuthorization(values, data)
+      setIsLoading(false)
       }
     )
   }
