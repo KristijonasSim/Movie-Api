@@ -9,6 +9,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 padding:70px 0px;
+background-color:red;
 `
 
 const Footer = () => {
