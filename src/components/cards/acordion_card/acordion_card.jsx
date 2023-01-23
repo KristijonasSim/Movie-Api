@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import { Accordion, Typography } from '@mui/material';
-import { questionsData } from '../../../questionsData';
+import { questionsData } from './questionsData';
 import CloseIcon from '@mui/icons-material/Close';
 import styled from '@emotion/styled';
 
@@ -28,7 +28,6 @@ const StyledAccordionSummary = styled(AccordionSummary)`
   }
 
 `
-
 const StyledExpandIcon = styled(CloseIcon)`
   color: #fff;
   font-size: 2rem;

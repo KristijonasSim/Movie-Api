@@ -1,251 +1,276 @@
-import { Box, styled, Typography, TextField, Slider } from '@mui/material'
-import { useParams } from 'react-router-dom';
-
-import {  useFormik } from 'formik';
-import RegisterPageButton from './RegisterPageButton'
-import React from 'react'
-import netflixImg from '../../components/assets/netflix.jpg'
-import * as Yup from 'yup';
-import UseRegister from '../../components/hooks/useRegister';
-
-
+import {
+  Grid,
+  Box,
+  styled,
+  Typography,
+  TextField,
+  Slider,
+  Autocomplete,
+} from "@mui/material";
+import { useFormik } from "formik";
+import RegisterPageButton from "./RegisterPageButton";
+import React from "react";
+import netflixImg from "../../components/assets/netflix.jpg";
+import * as Yup from "yup";
+import UseRegister from "../../components/hooks/useRegister";
+import { useLocation } from "react-router-dom";
+import { countries } from "./countrydata";
+import { useState } from "react";
 const StyledRegisterForm = styled(Box)`
-    width: 40%;
-    height: 100%;
-    border-radius: 10px ;
-    color:#fff;
-    background-color: rgba(0,0,0,0.8);
-    padding:4rem;
-`
+  max-width: 600px;
+  height: 70%;
+  border-radius: 10px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 4rem;
+  margin: auto;
+`;
+
+const RegisterFormTitle = styled(Typography)`
+  color: #fff;
+  margin-bottom: 2rem;
+`;
 
 const StyledHeroSection = styled(Box)`
-    background-image: linear-gradient(0deg,transparent 50%,rgba(0,0,0,.7)),radial-gradient(50% 100%,transparent 0,rgba(0,0,0,.7) 100%) , url(${netflixImg});
-    background-size: cover;
-    height: 100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-`
-
-const StyledInputBox = styled(Box)`
-    width:100%;
-    height:80%;
-    display: flex;
-    justify-content: space-between;
-    align-items:center;
-    flex-wrap: wrap;
-`
+  background-image: linear-gradient(0deg, transparent 50%, rgba(0, 0, 0, 0.7)),
+    radial-gradient(50% 100%, transparent 0, rgba(0, 0, 0, 0.7) 100%),
+    url(${netflixImg});
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StyledTextField = styled(TextField)`
-    width: 40%;
-    margin: 0 2rem;
-    background-color: #333333;
-`
-
-const StyledTextFieldFull = styled(TextField)`
-    width: 100%;
-    margin: 0 2rem;
-    background-color: #333333;
-    border-radius: 4px;
-`
-
+  width: 100%;
+  background-color: #333333;
+  & .MuiInputLabel-root {
+    color: #8c8c8c;
+    margin-left: 24px;
+    margin-top: 8px;
+  }
+  & .MuiInputLabel-root.Mui-focused {
+    color: #8c8c8c;
+  }
+    & .MuiInput-root {
+      color: #fff;
+      padding: 10px 20px;
+      height: 100%;
+    }
+    & .MuiInput-root:after {
+      border-bottom: 2px solid red;
+    }
+    & .Mui-error {
+      padding-left: 10px;
+    }
+  }
+`;
 
 const validationSchema = Yup.object({
-    email: Yup.string()
-      .email()
-      .required('Please enter a valid email'),
-    name: Yup.string()
-      .max(20, 'Must be 20 characters or less')
-      .required('Please enter your name'),
-    surname: Yup.string()
-      .max(20, 'Must be 20 characters or less')
-      .required('Please enter your surname'),
-    country: Yup.string()
-      .required('You must select country'),
-    age: Yup.number()
-      .required('You must provide your age')
-      .min(16, 'You must be over 16 years old'), 
-    password: Yup.string()
-      .required('No password provided.')
-      .min(8, "Password must contain 8 characters")
-      .matches(/[0-9]/, 'Password requires a number')
-      .matches(/[a-z]/, 'Password requires a lowercase letter')
-      .matches(/[A-Z]/, 'Password requires an uppercase letter'),
-    passwordRepeat: Yup.string().label('Confirm password').required().oneOf([Yup.ref('password'), null], 'Passwords must match'),
-})    
-
-
-
+  email: Yup.string().email().required("Please enter a valid email"),
+  name: Yup.string()
+    .max(20, "Must be 20 characters or less")
+    .required("Please enter your name"),
+  surname: Yup.string()
+    .max(20, "Must be 20 characters or less")
+    .required("Please enter your surname"),
+  country: Yup.string().required("You must select country"),
+  age: Yup.number()
+    .required("You must provide your age")
+    .min(16, "You must be over 16 years old"),
+  password: Yup.string()
+    .required("No password provided."),
+    // .min(8, "Password must contain 8 characters")
+    // .matches(/[0-9]/, "Password requires a number")
+    // .matches(/[a-z]/, "Password requires a lowercase letter")
+    // .matches(/[A-Z]/, "Password requires an uppercase letter"),
+  passwordRepeat: Yup.string()
+    .label("Confirm password")
+    .required()
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+});
 
 const RegisterPage = () => {
+  const { signup, error, isLoading } = UseRegister();
+  const location = useLocation();
+  const emailValue = location.state.emailValue;
+  const [selectedOption, setSelectedOption] = useState("");
 
-const { signup, error, isLoading } = UseRegister()
+  console.log(selectedOption.label);
 
 
-
-const handleSubmit = (values, e) => {
-  const formatObjectForPost = {
-    email: values.email,
-    name: values.name,
-    surname: values.surname,
-    country: values.country,
-    age: values.age,
-    password: values.password
-  }
-  signup(formatObjectForPost)
-  console.log(formatObjectForPost)
-}
+const handleTextFieldChange = (event) => {
+  setSelectedOption(event.target.value);
+};
 
   const formik = useFormik({
-    initialValues:{
-      email:'',
-      name:'',
-      surname:'',
-      country:'',
-      age:10,
-      password:'',
-      passwordRepeat:''
+    initialValues: {
+      email: emailValue,
+      name: "",
+      surname: "",
+      country: selectedOption,
+      age: 10,
+      password: "",
+      passwordRepeat: "",
     },
-    dirt:true,
+    dirt: true,
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema,
-      onSubmit: handleSubmit
-  })
-
-
+    onBlur: true,
+    onSubmit: signup,
+  });
   return (
-<StyledHeroSection>
-    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70%', padding: '4rem'}} >   
-    <StyledRegisterForm component='form' onSubmit={formik.handleSubmit}>
-        <Typography
-          sx={{mb:4}} 
-          variant='h3'>
-            Register 
-        </Typography>
-
-        <StyledInputBox>
-            <StyledTextFieldFull
-              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
-              InputLabelProps={{
-                style: { color: '#8C8C8C', marginLeft: '24px' },
-              }}
+    <StyledHeroSection>
+      <StyledRegisterForm component="form" onSubmit={formik.handleSubmit}>
+        <RegisterFormTitle variant="h3">Register</RegisterFormTitle>
+        <Grid container height="80%">
+          <Grid item xs={12}>
+            <StyledTextField
               id="email"
-              error = {!!formik.errors?.email && formik.touched?.email}            
+              error={!!formik.errors?.email && formik.touched?.email}
               name="email"
               label="Email"
-              type='email'
+              type="email"
               variant="standard"
               helperText={formik.errors?.email}
-              onChange={(formik.handleChange)}
+              onChange={formik.handleChange}
               value={formik.values.email}
             />
+          </Grid>
+          <Grid item xs={12} sm={5}>
             <StyledTextField
-              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
-              InputLabelProps={{
-                style: { color: '#8C8C8C', marginLeft: '24px' },
-              }}
-              error = {!!formik.errors?.name && formik.touched?.name}   
+              error={!!formik.errors?.name && formik.touched?.name}
               id="name"
               name="name"
               label="Name"
-              type='text'
+              type="text"
               variant="standard"
               helperText={formik.errors?.name}
-              onChange={(formik.handleChange)}
+              onChange={formik.handleChange}
               value={formik.values.name}
             />
+          </Grid>
+          <Grid item xs={12} sm={5} ml="auto">
             <StyledTextField
-              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
-              InputLabelProps={{
-                style: { color: '#8C8C8C', marginLeft: '24px' },
-              }}
-              error = {!!formik.errors?.surname && formik.touched?.surname}   
+              error={!!formik.errors?.surname && formik.touched?.surname}
               id="surname"
               name="surname"
               label="Surname"
-              type='text'
+              type="text"
               variant="standard"
               helperText={formik.errors?.surname}
-              onChange={(formik.handleChange)}
+              onChange={formik.handleChange}
               value={formik.values.surname}
             />
-            <StyledTextField
-              sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
-              InputLabelProps={{
-                style: { color: '#8C8C8C', marginLeft: '24px', },
-              }}
-              error = {!!formik.errors?.surname && formik.touched?.surname}   
-              id="country"
-              name="country"
-              label="Country"
-              type='text'
-              variant="standard"
-              helpertext={formik.errors?.country}
-              onChange={(formik.handleChange)}
-              value={formik.values.country}
-            />
-            <Box sx={{width:'40%', m:'0 2rem', color: '#8C8C8C'}}>
-              <Typography>Age</Typography>
-              <Slider 
-               sx={{color:'red'}}
-               id='age'
-               name='age'
-               type='number'
-               value={formik.values.age}
-               onChange={(event, newValue) => {
-                  formik.setFieldValue("age", newValue);
-                }}
-               min={0}
-               max={100}
-               step={1}
-               aria-labelledby="discrete-slider"
-               valueLabelDisplay="auto"
-              />
-              <Box sx={{color: '#D32F2F'}}>{formik.errors?.age}</Box>
-            </Box>
+          </Grid>
 
-            
-            <StyledTextFieldFull
-            sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
-              fullWidth
-              InputLabelProps={{
-                style: { color: '#8C8C8C', marginLeft: '24px' },
+          <Grid item xs={12} sm={5}>
+            <Autocomplete
+              name="country"
+              onChange={(event, newValue) => {
+                setSelectedOption(newValue);
               }}
-              error = {!!formik.errors?.password && formik.touched?.password}  
+              autoSelect={true}
+              value={selectedOption.label}
+              id="country-select-demo"
+              options={countries}
+              autoHighlight
+              onBlur={formik.handleBlur}
+              renderOption={(props, option) => (
+                <Box
+                  component="li"
+                  sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+                  {...props}
+                >
+                  <img
+                    loading="lazy"
+                    width="20"
+                    src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                    srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                    alt=""
+                  />
+                  {option.label}
+                </Box>
+              )}
+              renderInput={(params, option) => (
+                <StyledTextField
+                  fullWidth
+                  {...params}
+                  id="country"
+                  name="country"
+                  label="Country"
+                  type="text"
+                  variant="standard"
+                  error={!!formik.errors?.country && formik.touched?.country}
+                  helpertext={formik.errors?.country}
+                  onChange={handleTextFieldChange}
+                  value={selectedOption}
+                  inputProps={{
+                    ...params.inputProps,
+                    autoComplete: "new-password", // disable autocomplete and autofill
+                  }}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} sm={5} ml="auto" color="#8C8C8C">
+            <Typography>Age</Typography>
+            <Slider
+              sx={{ color: "red" }}
+              id="age"
+              name="age"
+              type="number"
+              value={formik.values.age}
+              onChange={(event, newValue) => {
+                formik.setFieldValue("age", newValue);
+              }}
+              min={0}
+              max={100}
+              step={1}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+            />
+            <Box sx={{ color: "#D32F2F" }}>{formik.errors?.age}</Box>
+          </Grid>
+          <Grid item xs={12}>
+            <StyledTextField
+              fullWidth
+              error={!!formik.errors?.password && formik.touched?.password}
               id="password"
               name="password"
               label="Password"
               type="password"
               variant="standard"
               helperText={formik.errors?.password}
-              onChange={(formik.handleChange)}
+              onChange={formik.handleChange}
               value={formik.values.password}
-              />
+            />
+          </Grid>
 
-            <StyledTextFieldFull
-            sx={{ input: { color: '#fff', marginLeft:'20px', marginBottom:'10px'}}} 
+          <Grid item xs={12}>
+            <StyledTextField
               fullWidth
-              InputLabelProps={{
-                style: { color: '#8C8C8C', marginLeft: '24px' },
-              }}
-              error = {!!formik.errors?.passwordRepeat && formik.touched?.passwordRepeat}  
+              error={
+                !!formik.errors?.passwordRepeat &&
+                formik.touched?.passwordRepeat
+              }
               id="passwordRepeat"
               name="passwordRepeat"
               label="Repeat password"
               type="password"
               variant="standard"
               helperText={formik.errors?.passwordRepeat}
-              onChange={(formik.handleChange)}
+              onChange={formik.handleChange}
               value={formik.values.passwordRepeat}
-              />
+            />
+          </Grid>
+        </Grid>
+        <RegisterPageButton />
+      </StyledRegisterForm>
+    </StyledHeroSection>
+  );
+};
 
-          </StyledInputBox>
-        <RegisterPageButton/>
-    </StyledRegisterForm>
-    </Box>
-</StyledHeroSection>
-  )
-}
-
-export default RegisterPage
+export default RegisterPage;

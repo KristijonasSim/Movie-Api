@@ -1,7 +1,6 @@
 import React, {useState, useCallback} from 'react'
 import { Box } from '@mui/system'
 import { useNavigate } from 'react-router-dom';
-
 import styled from '@emotion/styled'
 import { Typography, Button,  } from '@mui/material'
 import netflixImg from '../../../src/components/assets/netflix.jpg'
@@ -79,18 +78,22 @@ const StyledButton = styled(Button)`
 
 const MainPage = () => {
 
-const [emailValue,setEmailValue] = useState()
-
+const [emailValue, setEmailValue ] = useState('')
 
 const handleInputChange = (e) => {
   setEmailValue(e.target.value)
 }
 
+
   const navigate = useNavigate();
 
+  function handleNavigation() {
+    navigate('/register', {state:{emailValue}})
+  }
+
+console.log('Email value:',emailValue)
 
 
-console.log('reiksme:',emailValue)
   return (
     <Box>
       <StyledHeroSection>
@@ -102,7 +105,7 @@ console.log('reiksme:',emailValue)
               sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
   
             <EmailInputCard value={emailValue} handleChange={handleInputChange}/>
-            <StyledButton href='register '>Get Started</StyledButton>
+            <StyledButton onClick={handleNavigation}>Get Started</StyledButton>
 
             </Box>
 
@@ -181,11 +184,17 @@ console.log('reiksme:',emailValue)
         <StyledInputBox>
           <Typography 
           variant='h6'
-          sx={{mt:7, mb: 4}}>
+          sx={{mt:7}}>
             Ready to watch? Enter your email to create or restart your membership.
 
           </Typography>
-          <EmailInputCard value={emailValue} handleInputChange={handleInputChange}/>
+            <Box  component="form"
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+  
+            <EmailInputCard value={emailValue} handleChange={handleInputChange}/>
+            <StyledButton onClick={handleNavigation}>Get Started</StyledButton>
+
+            </Box>
         </StyledInputBox>
   </StyledStoryCard>
 

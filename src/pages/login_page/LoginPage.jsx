@@ -9,7 +9,7 @@ import netflixImg from '../../components/assets/netflix.jpg'
 const LoginFormBox = styled(Box)`
   width: 24%;
   height: 60%;
-  min-width: 400px;
+  min-width: 400px; 
   padding-bottom: 8rem;
   border: 2px solid black;
   border-radius: 10px ;
