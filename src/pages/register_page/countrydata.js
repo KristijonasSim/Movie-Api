@@ -245,3 +245,6 @@ export const countries  = [
   { code: 'ZM', label: 'Zambia'},
   { code: 'ZW', label: 'Zimbabwe'},
 ];
+
+
+console.log(countries)

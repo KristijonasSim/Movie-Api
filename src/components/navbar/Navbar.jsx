@@ -11,7 +11,7 @@ import UseLogout from '../hooks/useLogout';
 
 const StyledNavbarBox = styled(Box)`
  max-width: 2050px; 
- position: relative;
+ position: sticky;
  z-index: 10;
  margin: 0 4rem;
  height: auto;
@@ -22,7 +22,6 @@ const StyledNavbarInnerContainer = styled(Box)`
   display: flex; 
   height: auto; 
   justify-content: space-between; 
-  position: absolute;
   width: 100%;
   height: 7rem;
 `
@@ -49,20 +48,26 @@ const Navbar = () => {
   }
 
 return (
-      <StyledNavbarBox>
-        <StyledNavbarInnerContainer>
-          <Link href="main-page">
-                <Netflix/>
+  <StyledNavbarBox>
+    <StyledNavbarInnerContainer>
+      <Link href="main-page">
+        <Netflix />
+      </Link>
+      <Box>
+        {user ? (
+          <StyledSignButton onClick={handleLogout}>Log out</StyledSignButton>
+        ) : (
+          <Link href="login" sx={{ textDecoration: "none" }}>
+            <StyledSignButton>Sign in</StyledSignButton>
           </Link>
-          <Box>
-            {user ? <StyledSignButton onClick={handleLogout}>Log out</StyledSignButton> : 
-            <Link href="login" sx={{textDecoration:'none'}}>
-            <StyledSignButton>Sign in</StyledSignButton> 
-        </Link>  }
-          </Box>
-        </StyledNavbarInnerContainer>
-      </StyledNavbarBox>
-  )
+        )}
+      </Box>
+      <Box>
+        <StyledSignButton href="movies">Movies</StyledSignButton>
+      </Box>
+    </StyledNavbarInnerContainer>
+  </StyledNavbarBox>
+);
 }
 
 export default Navbar

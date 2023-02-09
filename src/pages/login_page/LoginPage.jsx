@@ -5,6 +5,10 @@ import UseLogin from '../../components/hooks/useLogin';
 import * as Yup from 'yup';
 import {  useFormik } from 'formik';
 import netflixImg from '../../components/assets/netflix.jpg'
+import { Navigate } from "react-router-dom";
+import { AuthContext } from '../../components/context/AuthContext';
+import { useContext } from 'react';
+
 
 const LoginFormBox = styled(Box)`
   width: 24%;
@@ -97,6 +101,9 @@ const  LoginPage = () => {
 
   const  { login, isLoading, error, errorMsg} = UseLogin()
 
+  const { user } = useContext(AuthContext)
+
+
   const handleSubmit = values => {
           const formatObjectForPost = {
             email:values.email,
@@ -118,6 +125,11 @@ const  LoginPage = () => {
     })
 
 return (
+  <Box>
+      {user ? (
+        <Navigate to='/movies'/>
+      ) : (
+
   <StyledHeroSection>
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', }} component='form' onSubmit={formik.handleSubmit}>
       <LoginFormBox>
@@ -184,6 +196,8 @@ return (
       </LoginFormBox>
        </Box>
   </StyledHeroSection>
+      )}
+      </Box>
   );
 }
 

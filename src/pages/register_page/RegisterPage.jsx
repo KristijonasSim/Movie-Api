@@ -6,6 +6,7 @@ import {
   TextField,
   Slider,
   Autocomplete,
+  MenuItem,
 } from "@mui/material";
 import { useFormik } from "formik";
 import RegisterPageButton from "./RegisterPageButton";
@@ -13,9 +14,14 @@ import React from "react";
 import netflixImg from "../../components/assets/netflix.jpg";
 import * as Yup from "yup";
 import UseRegister from "../../components/hooks/useRegister";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { countries } from "./countrydata";
-import { useState } from "react";
+import { AuthContext } from "../../components/context/AuthContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+
+
 const StyledRegisterForm = styled(Box)`
   max-width: 600px;
   height: 70%;
@@ -66,7 +72,6 @@ const StyledTextField = styled(TextField)`
     }
   }
 `;
-
 const validationSchema = Yup.object({
   email: Yup.string().email().required("Please enter a valid email"),
   name: Yup.string()
@@ -80,11 +85,11 @@ const validationSchema = Yup.object({
     .required("You must provide your age")
     .min(16, "You must be over 16 years old"),
   password: Yup.string()
-    .required("No password provided."),
-    // .min(8, "Password must contain 8 characters")
-    // .matches(/[0-9]/, "Password requires a number")
-    // .matches(/[a-z]/, "Password requires a lowercase letter")
-    // .matches(/[A-Z]/, "Password requires an uppercase letter"),
+    .required("No password provided.")
+    .min(8, "Password must contain 8 characters")
+    .matches(/[0-9]/, "Password requires a number")
+    .matches(/[a-z]/, "Password requires a lowercase letter")
+    .matches(/[A-Z]/, "Password requires an uppercase letter"),
   passwordRepeat: Yup.string()
     .label("Confirm password")
     .required()
@@ -92,25 +97,21 @@ const validationSchema = Yup.object({
 });
 
 const RegisterPage = () => {
-  const { signup, error, isLoading } = UseRegister();
+  const { signup, error, isLoading, errorMsg } = UseRegister();
+  const { user } = useContext(AuthContext)
+
+  console.log( user)
   const location = useLocation();
   const emailValue = location.state.emailValue;
-  const [selectedOption, setSelectedOption] = useState("");
-
-  console.log(selectedOption.label);
-
-
-const handleTextFieldChange = (event) => {
-  setSelectedOption(event.target.value);
-};
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
       email: emailValue,
       name: "",
       surname: "",
-      country: selectedOption,
-      age: 10,
+      country: '',
+      age: 25,
       password: "",
       passwordRepeat: "",
     },
@@ -122,155 +123,178 @@ const handleTextFieldChange = (event) => {
     onSubmit: signup,
   });
   return (
-    <StyledHeroSection>
-      <StyledRegisterForm component="form" onSubmit={formik.handleSubmit}>
-        <RegisterFormTitle variant="h3">Register</RegisterFormTitle>
-        <Grid container height="80%">
-          <Grid item xs={12}>
-            <StyledTextField
-              id="email"
-              error={!!formik.errors?.email && formik.touched?.email}
-              name="email"
-              label="Email"
-              type="email"
-              variant="standard"
-              helperText={formik.errors?.email}
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            />
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <StyledTextField
-              error={!!formik.errors?.name && formik.touched?.name}
-              id="name"
-              name="name"
-              label="Name"
-              type="text"
-              variant="standard"
-              helperText={formik.errors?.name}
-              onChange={formik.handleChange}
-              value={formik.values.name}
-            />
-          </Grid>
-          <Grid item xs={12} sm={5} ml="auto">
-            <StyledTextField
-              error={!!formik.errors?.surname && formik.touched?.surname}
-              id="surname"
-              name="surname"
-              label="Surname"
-              type="text"
-              variant="standard"
-              helperText={formik.errors?.surname}
-              onChange={formik.handleChange}
-              value={formik.values.surname}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={5}>
-            <Autocomplete
-              name="country"
-              onChange={(event, newValue) => {
-                setSelectedOption(newValue);
-              }}
-              autoSelect={true}
-              value={selectedOption.label}
-              id="country-select-demo"
-              options={countries}
-              autoHighlight
-              onBlur={formik.handleBlur}
-              renderOption={(props, option) => (
-                <Box
-                  component="li"
-                  sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-                  {...props}
-                >
-                  <img
-                    loading="lazy"
-                    width="20"
-                    src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                    srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                    alt=""
-                  />
-                  {option.label}
-                </Box>
-              )}
-              renderInput={(params, option) => (
+    <Box>
+      
+      {user ? (
+        <Navigate to='/movies'/>
+      ) : (
+        <StyledHeroSection>
+          <StyledRegisterForm component="form" onSubmit={formik.handleSubmit}>
+            <RegisterFormTitle variant="h3">Register</RegisterFormTitle>
+            <Grid container height="80%">
+              <Grid item xs={12}>
                 <StyledTextField
-                  fullWidth
-                  {...params}
-                  id="country"
-                  name="country"
-                  label="Country"
+                  id="email"
+                  error={!!formik.errors?.email && formik.touched?.email}
+                  name="email"
+                  label="Email"
+                  type="email"
+                  variant="standard"
+                  helperText={formik.errors?.email}
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                />
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <StyledTextField
+                  error={!!formik.errors?.name && formik.touched?.name}
+                  id="name"
+                  name="name"
+                  label="Name"
                   type="text"
                   variant="standard"
-                  error={!!formik.errors?.country && formik.touched?.country}
-                  helpertext={formik.errors?.country}
-                  onChange={handleTextFieldChange}
-                  value={selectedOption}
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-password", // disable autocomplete and autofill
-                  }}
+                  helperText={formik.errors?.name}
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
                 />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={5} ml="auto" color="#8C8C8C">
-            <Typography>Age</Typography>
-            <Slider
-              sx={{ color: "red" }}
-              id="age"
-              name="age"
-              type="number"
-              value={formik.values.age}
-              onChange={(event, newValue) => {
-                formik.setFieldValue("age", newValue);
-              }}
-              min={0}
-              max={100}
-              step={1}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-            />
-            <Box sx={{ color: "#D32F2F" }}>{formik.errors?.age}</Box>
-          </Grid>
-          <Grid item xs={12}>
-            <StyledTextField
-              fullWidth
-              error={!!formik.errors?.password && formik.touched?.password}
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              variant="standard"
-              helperText={formik.errors?.password}
-              onChange={formik.handleChange}
-              value={formik.values.password}
-            />
-          </Grid>
+              </Grid>
+              <Grid item xs={12} sm={5} ml="auto">
+                <StyledTextField
+                  error={!!formik.errors?.surname && formik.touched?.surname}
+                  id="surname"
+                  name="surname"
+                  label="Surname"
+                  type="text"
+                  variant="standard"
+                  helperText={formik.errors?.surname}
+                  onChange={formik.handleChange}
+                  value={formik.values.surname}
+                />
+              </Grid>
 
-          <Grid item xs={12}>
-            <StyledTextField
-              fullWidth
-              error={
-                !!formik.errors?.passwordRepeat &&
-                formik.touched?.passwordRepeat
-              }
-              id="passwordRepeat"
-              name="passwordRepeat"
-              label="Repeat password"
-              type="password"
-              variant="standard"
-              helperText={formik.errors?.passwordRepeat}
-              onChange={formik.handleChange}
-              value={formik.values.passwordRepeat}
-            />
-          </Grid>
-        </Grid>
-        <RegisterPageButton />
-      </StyledRegisterForm>
-    </StyledHeroSection>
+              <Grid item xs={12} sm={5}>
+                <StyledTextField
+                  sx={{ backgroundColor: "green" }}
+                  id="country"
+                  name="country"
+                  error={!!formik.errors?.country}
+                  select
+                  type="text"
+                  label="Select your country"
+                  variant="standard"
+                  helperText={formik.errors?.country}
+                  onChange={formik.handleChange}
+                  value={formik.values.country}
+                >
+                  {countries.map(({ label, code }) => (
+                    <MenuItem key={label} value={label}>
+                      {label} {code}
+                    </MenuItem>
+                  ))}
+                </StyledTextField>
+              </Grid>
+              <Grid item xs={12} sm={5} ml="auto" color="#8C8C8C">
+                <Typography>Age</Typography>
+                <Slider
+                  sx={{ color: "red" }}
+                  id="age"
+                  name="age"
+                  type="number"
+                  value={formik.values.age}
+                  onChange={(_event, newValue) => {
+                    formik.setFieldValue("age", newValue);
+                  }}
+                  min={0}
+                  max={100}
+                  step={1}
+                  aria-labelledby="discrete-slider"
+                  valueLabelDisplay="auto"
+                />
+                <Box sx={{ color: "#D32F2F" }}>{formik.errors?.age}</Box>
+              </Grid>
+              <Grid item xs={12}>
+                <StyledTextField
+                  fullWidth
+                  error={!!formik.errors?.password && formik.touched?.password}
+                  id="password"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  variant="standard"
+                  helperText={formik.errors?.password}
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <StyledTextField
+                  fullWidth
+                  error={
+                    !!formik.errors?.passwordRepeat &&
+                    formik.touched?.passwordRepeat
+                  }
+                  id="passwordRepeat"
+                  name="passwordRepeat"
+                  label="Repeat password"
+                  type="password"
+                  variant="standard"
+                  helperText={formik.errors?.passwordRepeat}
+                  onChange={formik.handleChange}
+                  value={formik.values.passwordRepeat}
+                />
+              </Grid>
+            </Grid>
+            <RegisterPageButton />
+          </StyledRegisterForm>
+        </StyledHeroSection>
+      )}
+    </Box>
   );
 };
 
 export default RegisterPage;
+
+
+
+            // <Autocomplete
+            //   name="country"
+            //   id="country-select-demo"
+            //   options={countries}
+            //   autoHighlight
+            //   renderOption={(props, option) => (
+            //     <Box
+            //       component="li"
+            //       sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+            //       {...props}
+            //     >
+            //       <img
+            //         loading="lazy"
+            //         width="20"
+            //         src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+            //         srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+            //         alt=""
+            //       />
+            //       {option.label}
+            //     </Box>
+            //   )}
+            //   renderInput={(params, option) => (
+            //     <StyledTextField
+            //       fullWidth
+            //       {...params}
+            //       id="country"
+            //       name="country"
+            //       label="Country"
+            //       type="text"
+            //       variant="standard"
+            //       error={!!formik.errors?.country && formik.touched?.country}
+            //       helpertext={formik.errors?.country}
+            //       onChange={formik.handleChange}
+            //       value={formik.values.country}
+            //       inputProps={{
+            //         ...params.inputProps,
+            //         autoComplete: "new-password", // disable autocomplete and autofill
+            //       }}
+            //     />
+            //   )}
+            // />;

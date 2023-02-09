@@ -8,7 +8,11 @@ const UseLogin = () => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const { dispatch } = useAuthContext()
+
+
+
 
 
 
@@ -24,6 +28,8 @@ const UseLogin = () => {
     }
   }
 
+
+
   const login = async (values) => {
     setIsLoading(true)
     setError(null)
@@ -31,8 +37,7 @@ const UseLogin = () => {
       .then(({ data }) => {
       checkAuthorization(values, data)
       setIsLoading(false)
-      }
-    )
+    })
   }
 
   return { login, isLoading, error, errorMsg }
