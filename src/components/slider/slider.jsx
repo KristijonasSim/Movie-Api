@@ -1,35 +1,12 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { userApi } from "../../components/api/userApi";
-import { useState } from "react";
-import { useEffect } from "react";
 import styled from "@emotion/styled";
 import Carousel from "react-elastic-carousel";
 import { Typography } from "@mui/material";
 
-const Slider = () => {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    getTrendingMovies();
-  }, []);
-  const getTrendingMovies = async () => {
-    try {
-      const response = await userApi.getTrendingMovies();
-      setMovies(response.data.results);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const breakPoints = [
-    { width: 800, itemsToShow: 2 },
-    { width: 1320, itemsToShow: 3 },
-    { width: 1400, itemsToShow: 5 },
-    { width: 1669, itemsToShow: 6 },
-  ];
-
-  const StyledContainer = styled(Box)``;
+  const StyledContainer = styled(Box)`
+    transition: all 5s;
+  `;
 
   const StyledImageContainer = styled(Box)`
     max-height: 160px;
@@ -64,6 +41,18 @@ const Slider = () => {
     }
   `;
 
+const Slider = ({ trendingMovies, onMovieSelected }) => {
+  const handleClick = (singleMovie) => {
+    onMovieSelected(singleMovie);
+  };
+
+  const breakPoints = [
+    { width: 1300, itemsToShow: 3 },
+    { width: 1400, itemsToShow: 4 },
+    { width: 1500, itemsToShow: 5 },
+    { width: 1600, itemsToShow: 6 },
+  ];
+
   const baseURL = "https://image.tmdb.org/t/p/original";
 
   return (
@@ -81,10 +70,10 @@ const Slider = () => {
         breakPoints={breakPoints}
         pagination={false}
         disableArrowsOnEnd={false}
-        transitionMs={1000}
+        transitionMs={500}
       >
-        {movies.map((item) => (
-          <StyledContainer>
+        {trendingMovies.map((item) => (
+          <StyledContainer key={item.id} onMouseEnter={() => handleClick(item)}>
             <StyledImageContainer
               key={item.id}
               sx={{ height: "200px", width: "auto" }}
@@ -99,4 +88,3 @@ const Slider = () => {
 };
 
 export default Slider;
-

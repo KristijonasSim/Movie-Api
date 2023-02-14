@@ -10,24 +10,24 @@ import UseLogout from '../hooks/useLogout';
 
 
 const StyledNavbarBox = styled(Box)`
- max-width: 2050px; 
- position: sticky;
- z-index: 10;
- margin: 0 4rem;
- height: auto;
-`
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  height:5rem;
+`;
 
 const StyledNavbarInnerContainer = styled(Box)`
   align-items: center;
   display: flex; 
   height: auto; 
   justify-content: space-between; 
-  width: 100%;
-  height: 7rem;
+  width: 95%;
+  margin-right:0 4rem;
 `
 
 const StyledSignButton = styled(Button)`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   color:#fff;
   padding: 2px 17px;
@@ -36,6 +36,7 @@ const StyledSignButton = styled(Button)`
   text-transform: capitalize;
   letter-spacing: 0!important;
   &:hover {color: #C1C1C1; transition: 0.8s ease-in-out};
+  margin:1rem;
 `
 const Navbar = () => {
 
@@ -61,8 +62,6 @@ return (
             <StyledSignButton>Sign in</StyledSignButton>
           </Link>
         )}
-      </Box>
-      <Box>
         <StyledSignButton href="movies">Movies</StyledSignButton>
       </Box>
     </StyledNavbarInnerContainer>

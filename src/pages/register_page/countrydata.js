@@ -247,4 +247,3 @@ export const countries  = [
 ];
 
 
-console.log(countries)
